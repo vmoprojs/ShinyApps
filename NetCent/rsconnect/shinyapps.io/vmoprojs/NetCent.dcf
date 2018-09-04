@@ -1,0 +1,12 @@
+name: NetCent
+title: NetCent
+username:
+account: vmoprojs
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 406902
+bundleId: 1567663
+url: https://vmoprojs.shinyapps.io/NetCent/
+when: 1536011493.89493
+asMultiple: FALSE
+asStatic: FALSE

@@ -14,17 +14,18 @@ function(input, output) {
     fil3B <- replicas.sd$indicator==input$indicator &  replicas.sd$country==input$countryB
 
     val <- log(base[fil2,"value"])
+    n.sd <- 2/sqrt(134)
     
-    sup <- val+1*exp(replicas.sd[fil3,"value"])
-    inft <- val-1*exp(replicas.sd[fil3,"value"])
+    sup <- val+n.sd*exp(replicas.sd[fil3,"value"])
+    inft <- val-n.sd*exp(replicas.sd[fil3,"value"])
     
     anioA <- (base[fil2,"year"])
     
     
     valB <- log(base[fil2B,"value"])
     anioB <- (base[fil2B,"year"])
-    supB <- valB+1*exp(replicas.sd[fil3B,"value"])
-    inftB <- valB-1*exp(replicas.sd[fil3B,"value"])
+    supB <- valB+n.sd*exp(replicas.sd[fil3B,"value"])
+    inftB <- valB-n.sd*exp(replicas.sd[fil3B,"value"])
     
     
     dat.aux <- data.frame(inferior = inft,mean = val,superior = sup)
@@ -157,7 +158,8 @@ function(input, output) {
   })
   
   output$summary <- renderTable({
-    
+    # Standar deviations
+    n.sd <- 2/sqrt(134)
     fil2 <- base$indicator==input$indicator &  base$country==input$countryA
     fil3 <- replicas.sd$indicator==input$indicator &  replicas.sd$country==input$countryA
     
@@ -166,14 +168,14 @@ function(input, output) {
     
     val <- log(base[fil2,"value"])
     anio <- (base[fil2,"year"])
-    sup <- val+1*exp(replicas.sd[fil3,"value"])
-    inft <- val-1*exp(replicas.sd[fil3,"value"])
+    sup <- val+n.sd*exp(replicas.sd[fil3,"value"])
+    inft <- val-n.sd*exp(replicas.sd[fil3,"value"])
     
     
     valB <- log(base[fil2B,"value"])
     # anio <- (base[fil2B,"year"])
-    supB <- valB+1*exp(replicas.sd[fil3B,"value"])
-    inftB <- valB-1*exp(replicas.sd[fil3B,"value"])
+    supB <- valB+n.sd*exp(replicas.sd[fil3B,"value"])
+    inftB <- valB-n.sd*exp(replicas.sd[fil3B,"value"])
     
     # Muts <- mydata()
     # summary(Muts)

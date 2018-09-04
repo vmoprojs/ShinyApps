@@ -81,8 +81,8 @@ fluidPage(
 <li>Eigen: centralidad de Vector propio o <i>pagerank</i>. Este tipo de medida se basa en la idea de que la centralidad de los vecinos le es heredada al nodo objetivo</li>
 <li>Elasticidad: Supone una propensión marginal a importar, así como una determinada estructura comercial dada por la red</li>
 <ul>
-<li>Elasticidad i: medida de la centralidad de cada país en el comercio mundial. Así, un país es más <i>central</i> si aumenta su elasticidad.</li>
-<li>Elasticidad j: dependencia de un país frente a un shock del resto de países.</li>
+<li>Elasticidad i: Efecto promedio que tiene el incremento de 1% en el ingreso del país <i>i</i> sobre un país del resto del mundo.</li>
+<li>Elasticidad j: Efecto promedio que tiene, sobre el país <i>j</i>, el incremento de 1% en el ingreso de un país del resto del mundo.</li>
 </ul>
 </ul>
                  ")),

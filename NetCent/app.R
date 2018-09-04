@@ -1,3 +1,5 @@
+# rm(list = ls())
+# setwd("~/Documents/ShinyApps/NetCent")
 # library(ggplot2)
 ########################## Directorios ###############################
 # carpeta_general<-"~/Documents/DataBase/Gravity/03 Proyecto 3"
@@ -7,6 +9,7 @@
 yrs <- 1992:2015
 # yrs <- yrs[1:12]
 load("data/CentralitySims.RData")
+# load("CentralitySims.RData")
 
 
 colnames(replicas.sum)[1] <- "value"
@@ -31,6 +34,7 @@ anio <- unique(replicas$year)#jj
 pais <- unique(replicas$country)[order(unique(replicas$country))]#kk
 
 paises <- read.csv("data/CC.csv",sep = ",", header = TRUE)
+# paises <- read.csv("CC.csv",sep = ",", header = TRUE)
 
-nom.pais <- as.character(paises[match(pais,as.character(paises$ISO3)),"Nombre"])
+nom.pais <- as.character(paises[match(tolower(pais),(as.character(paises$ISO3))),"Nombre"])
 names(pais) <- nom.pais
