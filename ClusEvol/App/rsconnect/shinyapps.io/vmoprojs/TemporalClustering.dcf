@@ -1,0 +1,12 @@
+name: TemporalClustering
+title: TemporalClustering
+username:
+account: vmoprojs
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 939521
+bundleId: 2097768
+url: https://vmoprojs.shinyapps.io/TemporalClustering/
+when: 1558401071.8695
+asMultiple: FALSE
+asStatic: FALSE

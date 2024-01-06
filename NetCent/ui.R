@@ -3,47 +3,42 @@ source("app.R")
 fluidPage(    
   
   # Give the page a title
-  titlePanel(title=div(img(src="flacsologo.png",height=32, width=22),"Centralidad en la red de comercio")),
+  titlePanel(title=div(img(src="flacsologo.png",height=50, width=50),"Trade Network Centrality: A sensitivity analysis toolkit")),
   hr(),
-  helpText("El presente aplicativo es una versión beta (en desarrollo) del estudio de
-           indicadores de centralidad de la red de comercio. 
-           Los valores desplegados son los resultados de la investigación: 
-           Una medición de sensibilidad de la red de comercio internacional en el período 1992-2015"),
+  helpText("This application is a beta version (under development) of the study of centrality indicators of the trade network. The values displayed are the results of the investigation: A sensitivity measurement of the international trade network in the period 1992-2015"),
   
   # Generate a row with a sidebar
   sidebarLayout(      
     
     # Define the sidebar with one input
     sidebarPanel(width = 3,
-      helpText("Elija el indicador de centralidad que desea analizar"),
-      selectInput("indicator", "Indicador:", 
+      helpText("Choose the centrality measure you want to analyze"),
+      selectInput("indicator", "Indicator:", 
                   choices=indicador),
-      checkboxInput("checkdata", "Mostrar valores del gráfico", FALSE),
+      checkboxInput("checkdata", "Show figure values", FALSE),
       hr(),
-      helpText("Elija el(los) países a graficar:"),
+      helpText("Choose the country(s) to plot:"),
       
-      selectInput("countryA", "País 1:", 
+      selectInput("countryA", "Country 1:", 
                   choices=pais),
       
-      selectInput("countryB", "País 2:", 
+      selectInput("countryB", "Country 2:", 
                   choices=pais),
       
-      sliderInput("time", "Ventana de tiempo", 
+      sliderInput("time", "Time Window", 
                   min=1992, max=2015, value=c(1992,2015)),
       
       wellPanel(
-        selectInput("year1", "Selecciona los años de comparación para el test de Wilcoxon por parejas de años", 
+        selectInput("year1", "Select the comparison years for the Wilcoxon test by pairs of years", 
                     choices=anio),
         selectInput("year2", "", 
                     choices=anio),
         tags$small(paste0(
-          "Nota: La comparación entre años es realizada",
-          " mediante simulaciones del indicador de",
-          " centralidad de cada país. Se realizaron 1000 simulaciones por año.",
-          " Fuente de datos: Banco Mundial.",
-          " Autores:",
-          "   \nPérez-Ovierdo Wilson,", 
-              "\nJohn Cajas-Guijarro y ",
+          "Note: The comparison between years is carried out ",
+          " through simulations of the centrality indicator of each country. ",
+          " 1000 simulations were carried out per year.",
+          " Source: World Bank.",
+          " Autor:",
               "\nVíctor Morales-Oñate"
         ))
       )
@@ -59,30 +54,30 @@ fluidPage(
       
       # if( input$checkdata == TRUE)
       # {
-        h4("Tabla de valores"),
+        h4("Table"),
         tableOutput("summary"),
       # }
       
       
       
       tabsetPanel(id="tabspanel", type = "tabs",
-                  tabPanel(title = "Wilcox País 1",
+                  tabPanel(title = "Wilcox Country 1",
                            verbatimTextOutput(outputId = "pA"))),
       
       
       tabsetPanel(id="tabspanel", type = "tabs",
-                  tabPanel(title = "Wilcox País 2",
+                  tabPanel(title = "Wilcox Country 2",
                            verbatimTextOutput(outputId = "pB")))
     )
   )
   ,
-  el <- div(HTML("<h3>Nota técnica</h3> <br>
+  el <- div(HTML("<h3>Technical Note</h3> <br>
 <ul>
-<li>Eigen: centralidad de Vector propio o <i>pagerank</i>. Este tipo de medida se basa en la idea de que la centralidad de los vecinos le es heredada al nodo objetivo</li>
-<li>Elasticidad: Supone una propensión marginal a importar, así como una determinada estructura comercial dada por la red</li>
+<li>Eigen centrality: This type of measurement is based on the idea that the centrality of the neighbors is inherited to the target node</li>
+<li>Elasticity: It assumes a marginal propensity to import, as well as a certain commercial structure given by the network</li>
 <ul>
-<li>Elasticidad i: Efecto promedio que tiene el incremento de 1% en el ingreso del país <i>i</i> sobre un país del resto del mundo.</li>
-<li>Elasticidad j: Efecto promedio que tiene, sobre el país <i>j</i>, el incremento de 1% en el ingreso de un país del resto del mundo.</li>
+<li>Elasticity i: Average effect of a 1% increase in the income of country <i>i</i> on a country in the rest of the world.</li>
+<li>Elasticity j: Average effect of a 1% increase in the income of a country from the rest of the world on country <i>j</i>.</li>
 </ul>
 </ul>
                  ")),

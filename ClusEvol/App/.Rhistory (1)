@@ -1,0 +1,512 @@
+b1 <- subset(b1,fil)
+fil1 <- (b2$DPA_CANTON %in% b1$DPA_CANTON)
+table(fil1)
+b2 <- subset(b2,fil1)
+cont.nb <- poly2nb(b2)
+cont.mat <- nb2mat(cont.nb,zero.policy = TRUE) # W matrix converted to class matrix
+x1 <- as.numeric(unlist(b1[,var1]@data ))
+x2 <- as.numeric(unlist(b2[,var2]@data ))
+# version with matrix W
+ii<-crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=TRUE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+iii <- crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=FALSE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+pear <- cor.test(x1,x2) # Pearson correlation
+spear <- cor.test(x1,x2,method = "spearman") # Pearson correlation
+solCross <- rbind(c(pear$estimate,pear$p.value),
+c(spear$estimate,spear$p.value),
+c(ii$I,ii$global.p),
+c(iii$I,iii$global.p))
+colnames(solCross) <- c("Valor","p valor")
+rownames(solCross) <- c("Pearson",
+"Spearman",
+"Moran",
+"Moran*")
+# Influencia de x en y (Indicador en NBI):
+# head(ii$SCI[,"lsci.xy"]) # accessing the result
+setwd(dir.results)
+rio::export(solCross, file = "CrossCorrelaciones.xlsx",
+which = paste(var1,var2,sep = ""),rowNames=TRUE)
+##### Iteracion de la Correlacion
+#   Pr_FRIF_98 - Rural
+b1 <- IPA_FRIF_98_00
+b2 <- nbiPoli01
+names(b1)
+names(b2)
+var1 <- "Pr_FRIF_98"
+var2 <- "Rural"
+fil <- (b1$DPA_CANTON %in% b2$DPA_CANTON)
+table(fil)
+b1 <- subset(b1,fil)
+fil1 <- (b2$DPA_CANTON %in% b1$DPA_CANTON)
+table(fil1)
+b2 <- subset(b2,fil1)
+cont.nb <- poly2nb(b2)
+cont.mat <- nb2mat(cont.nb,zero.policy = TRUE) # W matrix converted to class matrix
+x1 <- as.numeric(unlist(b1[,var1]@data ))
+x2 <- as.numeric(unlist(b2[,var2]@data ))
+# version with matrix W
+ii<-crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=TRUE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+iii <- crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=FALSE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+pear <- cor.test(x1,x2) # Pearson correlation
+spear <- cor.test(x1,x2,method = "spearman") # Pearson correlation
+solCross <- rbind(c(pear$estimate,pear$p.value),
+c(spear$estimate,spear$p.value),
+c(ii$I,ii$global.p),
+c(iii$I,iii$global.p))
+colnames(solCross) <- c("Valor","p valor")
+rownames(solCross) <- c("Pearson",
+"Spearman",
+"Moran",
+"Moran*")
+# Influencia de x en y (Indicador en NBI):
+# head(ii$SCI[,"lsci.xy"]) # accessing the result
+setwd(dir.results)
+rio::export(solCross, file = "CrossCorrelaciones.xlsx",
+which = paste(var1,var2,sep = ""),rowNames=TRUE)
+##### Iteracion de la Correlacion
+#   Deforestacion - Total 90
+b1 <- deforestacion
+b2 <- nbiPoli90
+names(b1)
+names(b2)
+var1 <- "P_DEF"
+var2 <- "Total"
+fil <- (b1$DPA_CANTON %in% b2$DPA_CANTON)
+table(fil)
+b1 <- subset(b1,fil)
+fil1 <- (b2$DPA_CANTON %in% b1$DPA_CANTON)
+table(fil1)
+b2 <- subset(b2,fil1)
+cont.nb <- poly2nb(b2)
+cont.mat <- nb2mat(cont.nb,zero.policy = TRUE) # W matrix converted to class matrix
+x1 <- as.numeric(unlist(b1[,var1]@data ))
+x2 <- as.numeric(unlist(b2[,var2]@data ))
+# version with matrix W
+ii<-crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=TRUE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+iii <- crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=FALSE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+pear <- cor.test(x1,x2) # Pearson correlation
+spear <- cor.test(x1,x2,method = "spearman") # Pearson correlation
+solCross <- rbind(c(pear$estimate,pear$p.value),
+c(spear$estimate,spear$p.value),
+c(ii$I,ii$global.p),
+c(iii$I,iii$global.p))
+colnames(solCross) <- c("Valor","p valor")
+rownames(solCross) <- c("Pearson",
+"Spearman",
+"Moran",
+"Moran*")
+# Influencia de x en y (Indicador en NBI):
+# head(ii$SCI[,"lsci.xy"]) # accessing the result
+setwd(dir.results)
+rio::export(solCross, file = "CrossCorrelaciones.xlsx",
+which = paste(var1,var2,"90",sep = ""),rowNames=TRUE)
+##### Iteracion de la Correlacion
+#   Deforestacion - Urbano 90
+b1 <- deforestacion
+b2 <- nbiPoli90
+names(b1)
+names(b2)
+var1 <- "P_DEF"
+var2 <- "Urbano"
+fil <- (b1$DPA_CANTON %in% b2$DPA_CANTON)
+table(fil)
+b1 <- subset(b1,fil)
+fil1 <- (b2$DPA_CANTON %in% b1$DPA_CANTON)
+table(fil1)
+b2 <- subset(b2,fil1)
+cont.nb <- poly2nb(b2)
+cont.mat <- nb2mat(cont.nb,zero.policy = TRUE) # W matrix converted to class matrix
+x1 <- as.numeric(unlist(b1[,var1]@data ))
+x2 <- as.numeric(unlist(b2[,var2]@data ))
+# version with matrix W
+ii<-crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=TRUE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+iii <- crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=FALSE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+pear <- cor.test(x1,x2) # Pearson correlation
+spear <- cor.test(x1,x2,method = "spearman") # Pearson correlation
+solCross <- rbind(c(pear$estimate,pear$p.value),
+c(spear$estimate,spear$p.value),
+c(ii$I,ii$global.p),
+c(iii$I,iii$global.p))
+colnames(solCross) <- c("Valor","p valor")
+rownames(solCross) <- c("Pearson",
+"Spearman",
+"Moran",
+"Moran*")
+# Influencia de x en y (Indicador en NBI):
+# head(ii$SCI[,"lsci.xy"]) # accessing the result
+setwd(dir.results)
+rio::export(solCross, file = "CrossCorrelaciones.xlsx",
+which = paste(var1,var2,"90",sep = ""),rowNames=TRUE)
+##### Iteracion de la Correlacion
+#   Deforestacion - Rural 90
+b1 <- deforestacion
+b2 <- nbiPoli90
+names(b1)
+names(b2)
+var1 <- "P_DEF"
+var2 <- "Rural"
+fil <- (b1$DPA_CANTON %in% b2$DPA_CANTON)
+table(fil)
+b1 <- subset(b1,fil)
+fil1 <- (b2$DPA_CANTON %in% b1$DPA_CANTON)
+table(fil1)
+b2 <- subset(b2,fil1)
+cont.nb <- poly2nb(b2)
+cont.mat <- nb2mat(cont.nb,zero.policy = TRUE) # W matrix converted to class matrix
+x1 <- as.numeric(unlist(b1[,var1]@data ))
+x2 <- as.numeric(unlist(b2[,var2]@data ))
+# version with matrix W
+ii<-crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=TRUE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+iii <- crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=FALSE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+pear <- cor.test(x1,x2) # Pearson correlation
+spear <- cor.test(x1,x2,method = "spearman") # Pearson correlation
+solCross <- rbind(c(pear$estimate,pear$p.value),
+c(spear$estimate,spear$p.value),
+c(ii$I,ii$global.p),
+c(iii$I,iii$global.p))
+colnames(solCross) <- c("Valor","p valor")
+rownames(solCross) <- c("Pearson",
+"Spearman",
+"Moran",
+"Moran*")
+# Influencia de x en y (Indicador en NBI):
+# head(ii$SCI[,"lsci.xy"]) # accessing the result
+setwd(dir.results)
+rio::export(solCross, file = "CrossCorrelaciones.xlsx",
+which = paste(var1,var2,"90",sep = ""),rowNames=TRUE)
+##### Iteracion de la Correlacion
+#   Deforestacion - Total 01
+b1 <- deforestacion
+b2 <- nbiPoli01
+names(b1)
+names(b2)
+var1 <- "P_DEF"
+var2 <- "Total"
+fil <- (b1$DPA_CANTON %in% b2$DPA_CANTON)
+table(fil)
+b1 <- subset(b1,fil)
+fil1 <- (b2$DPA_CANTON %in% b1$DPA_CANTON)
+table(fil1)
+b2 <- subset(b2,fil1)
+cont.nb <- poly2nb(b2)
+cont.mat <- nb2mat(cont.nb,zero.policy = TRUE) # W matrix converted to class matrix
+x1 <- as.numeric(unlist(b1[,var1]@data ))
+x2 <- as.numeric(unlist(b2[,var2]@data ))
+# version with matrix W
+ii<-crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=TRUE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+iii <- crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=FALSE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+pear <- cor.test(x1,x2) # Pearson correlation
+spear <- cor.test(x1,x2,method = "spearman") # Pearson correlation
+solCross <- rbind(c(pear$estimate,pear$p.value),
+c(spear$estimate,spear$p.value),
+c(ii$I,ii$global.p),
+c(iii$I,iii$global.p))
+colnames(solCross) <- c("Valor","p valor")
+rownames(solCross) <- c("Pearson",
+"Spearman",
+"Moran",
+"Moran*")
+# Influencia de x en y (Indicador en NBI):
+# head(ii$SCI[,"lsci.xy"]) # accessing the result
+setwd(dir.results)
+rio::export(solCross, file = "CrossCorrelaciones.xlsx",
+which = paste(var1,var2,"01",sep = ""),rowNames=TRUE)
+##### Iteracion de la Correlacion
+#   Deforestacion - Urbano 01
+b1 <- deforestacion
+b2 <- nbiPoli01
+names(b1)
+names(b2)
+var1 <- "P_DEF"
+var2 <- "Urbano"
+fil <- (b1$DPA_CANTON %in% b2$DPA_CANTON)
+table(fil)
+b1 <- subset(b1,fil)
+fil1 <- (b2$DPA_CANTON %in% b1$DPA_CANTON)
+table(fil1)
+b2 <- subset(b2,fil1)
+cont.nb <- poly2nb(b2)
+cont.mat <- nb2mat(cont.nb,zero.policy = TRUE) # W matrix converted to class matrix
+x1 <- as.numeric(unlist(b1[,var1]@data ))
+x2 <- as.numeric(unlist(b2[,var2]@data ))
+# version with matrix W
+ii<-crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=TRUE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+iii <- crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=FALSE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+pear <- cor.test(x1,x2) # Pearson correlation
+spear <- cor.test(x1,x2,method = "spearman") # Pearson correlation
+solCross <- rbind(c(pear$estimate,pear$p.value),
+c(spear$estimate,spear$p.value),
+c(ii$I,ii$global.p),
+c(iii$I,iii$global.p))
+colnames(solCross) <- c("Valor","p valor")
+rownames(solCross) <- c("Pearson",
+"Spearman",
+"Moran",
+"Moran*")
+# Influencia de x en y (Indicador en NBI):
+# head(ii$SCI[,"lsci.xy"]) # accessing the result
+setwd(dir.results)
+rio::export(solCross, file = "CrossCorrelaciones.xlsx",
+which = paste(var1,var2,"01",sep = ""),rowNames=TRUE)
+##### Iteracion de la Correlacion
+#   Deforestacion - Urbano 01
+b1 <- deforestacion
+b2 <- nbiPoli01
+names(b1)
+names(b2)
+var1 <- "P_DEF"
+var2 <- "Rural"
+fil <- (b1$DPA_CANTON %in% b2$DPA_CANTON)
+table(fil)
+b1 <- subset(b1,fil)
+fil1 <- (b2$DPA_CANTON %in% b1$DPA_CANTON)
+table(fil1)
+b2 <- subset(b2,fil1)
+cont.nb <- poly2nb(b2)
+cont.mat <- nb2mat(cont.nb,zero.policy = TRUE) # W matrix converted to class matrix
+x1 <- as.numeric(unlist(b1[,var1]@data ))
+x2 <- as.numeric(unlist(b2[,var2]@data ))
+# version with matrix W
+ii<-crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=TRUE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+iii <- crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=FALSE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+pear <- cor.test(x1,x2) # Pearson correlation
+spear <- cor.test(x1,x2,method = "spearman") # Pearson correlation
+solCross <- rbind(c(pear$estimate,pear$p.value),
+c(spear$estimate,spear$p.value),
+c(ii$I,ii$global.p),
+c(iii$I,iii$global.p)
+)
+colnames(solCross) <- c("Valor","p valor")
+rownames(solCross) <- c("Pearson",
+"Spearman",
+"Moran",
+"Moran*")
+# Influencia de x en y (Indicador en NBI):
+# head(ii$SCI[,"lsci.xy"]) # accessing the result
+setwd(dir.results)
+rio::export(solCross, file = "CrossCorrelaciones.xlsx",
+which = paste(var1,var2,"01",sep = ""),rowNames=TRUE)
+b1 <- deforestacion
+b2 <- IPA_FRIF_92_97
+names(b1)
+names(b2)
+var1 <- "P_DEF"
+var2 <- "Pr_IPA_92_"
+fil <- (b1$DPA_CANTON %in% b2$DPA_CANTON)
+table(fil)
+b1 <- subset(b1,fil)
+fil1 <- (b2$DPA_CANTON %in% b1$DPA_CANTON)
+table(fil1)
+b2 <- subset(b2,fil1)
+cont.nb <- poly2nb(b2)
+cont.mat <- nb2mat(cont.nb,zero.policy = TRUE) # W matrix converted to class matrix
+x1 <- as.numeric(unlist(b1[,var1]@data ))
+x2 <- as.numeric(unlist(b2[,var2]@data ))
+# version with matrix W
+ii<-crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=TRUE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+iii <- crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=FALSE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+pear <- cor.test(x1,x2) # Pearson correlation
+spear <- cor.test(x1,x2,method = "spearman") # Pearson correlation
+solCross <- rbind(c(pear$estimate,pear$p.value),
+c(spear$estimate,spear$p.value),
+c(ii$I,ii$global.p),
+c(iii$I,iii$global.p))
+colnames(solCross) <- c("Valor","p valor")
+rownames(solCross) <- c("Pearson",
+"Spearman",
+"Moran",
+"Moran*")
+setwd(dir.results)
+solCross
+paste(var1,var2,sep = "")
+setwd(dir.results)
+rio::export(solCross, file = "CrossCorrelaciones.xlsx",
+which = paste(var1,var2,sep = ""),rowNames=TRUE)
+b1 <- deforestacion
+b2 <- IPA_FRIF_92_97
+names(b1)
+names(b2)
+var1 <- "P_DEF"
+var2 <- "Pr_FRIF_92"
+fil <- (b1$DPA_CANTON %in% b2$DPA_CANTON)
+table(fil)
+b1 <- subset(b1,fil)
+fil1 <- (b2$DPA_CANTON %in% b1$DPA_CANTON)
+table(fil1)
+b2 <- subset(b2,fil1)
+cont.nb <- poly2nb(b2)
+cont.mat <- nb2mat(cont.nb,zero.policy = TRUE) # W matrix converted to class matrix
+x1 <- as.numeric(unlist(b1[,var1]@data ))
+x2 <- as.numeric(unlist(b2[,var2]@data ))
+# version with matrix W
+ii<-crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=TRUE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+iii <- crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=FALSE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+pear <- cor.test(x1,x2) # Pearson correlation
+spear <- cor.test(x1,x2,method = "spearman") # Pearson correlation
+solCross <- rbind(c(pear$estimate,pear$p.value),
+c(spear$estimate,spear$p.value),
+c(ii$I,ii$global.p),
+c(iii$I,iii$global.p))
+colnames(solCross) <- c("Valor","p valor")
+rownames(solCross) <- c("Pearson",
+"Spearman",
+"Moran",
+"Moran*")
+setwd(dir.results)
+solCross
+paste(var1,var2,sep = "")
+setwd(dir.results)
+rio::export(solCross, file = "CrossCorrelaciones.xlsx",
+which = paste(var1,var2,sep = ""),rowNames=TRUE)
+b1 <- deforestacion
+b2 <- IPA_FRIF_98_00
+names(b1)
+names(b2)
+var1 <- "P_DEF"
+var2 <- "Pr_IPA_98_"
+fil <- (b1$DPA_CANTON %in% b2$DPA_CANTON)
+table(fil)
+b1 <- subset(b1,fil)
+fil1 <- (b2$DPA_CANTON %in% b1$DPA_CANTON)
+table(fil1)
+b2 <- subset(b2,fil1)
+cont.nb <- poly2nb(b2)
+cont.mat <- nb2mat(cont.nb,zero.policy = TRUE) # W matrix converted to class matrix
+x1 <- as.numeric(unlist(b1[,var1]@data ))
+x2 <- as.numeric(unlist(b2[,var2]@data ))
+# version with matrix W
+ii<-crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=TRUE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+iii <- crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=FALSE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+pear <- cor.test(x1,x2) # Pearson correlation
+spear <- cor.test(x1,x2,method = "spearman") # Pearson correlation
+solCross <- rbind(c(pear$estimate,pear$p.value),
+c(spear$estimate,spear$p.value),
+c(ii$I,ii$global.p),
+c(iii$I,iii$global.p))
+colnames(solCross) <- c("Valor","p valor")
+rownames(solCross) <- c("Pearson",
+"Spearman",
+"Moran",
+"Moran*")
+solCross
+setwd(dir.results)
+rio::export(solCross, file = "CrossCorrelaciones.xlsx",
+which = paste(var1,var2,sep = ""),rowNames=TRUE)
+b1 <- deforestacion
+b2 <- IPA_FRIF_98_00
+names(b1)
+names(b2)
+var1 <- "P_DEF"
+var2 <- "Pr_FRIF_98"
+fil <- (b1$DPA_CANTON %in% b2$DPA_CANTON)
+table(fil)
+b1 <- subset(b1,fil)
+fil1 <- (b2$DPA_CANTON %in% b1$DPA_CANTON)
+table(fil1)
+b2 <- subset(b2,fil1)
+cont.nb <- poly2nb(b2)
+cont.mat <- nb2mat(cont.nb,zero.policy = TRUE) # W matrix converted to class matrix
+x1 <- as.numeric(unlist(b1[,var1]@data ))
+x2 <- as.numeric(unlist(b2[,var2]@data ))
+# version with matrix W
+ii<-crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=TRUE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+iii <- crossCorrelation(x1, x2, w=cont.mat, type=c("LSCI", "GSCI"), k=999,
+scale.xy=FALSE, scale.partial=TRUE, scale.matrix=TRUE, alpha=0.05)
+pear <- cor.test(x1,x2) # Pearson correlation
+spear <- cor.test(x1,x2,method = "spearman") # Pearson correlation
+solCross <- rbind(c(pear$estimate,pear$p.value),
+c(spear$estimate,spear$p.value),
+c(ii$I,ii$global.p),
+c(iii$I,iii$global.p))
+colnames(solCross) <- c("Valor","p valor")
+rownames(solCross) <- c("Pearson",
+"Spearman",
+"Moran",
+"Moran*")
+setwd(dir.results)
+rio::export(solCross, file = "CrossCorrelaciones.xlsx",
+which = paste(var1,var2,sep = ""),rowNames=TRUE)
+version
+shiny::runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+?hcmap
+?color_classes
+?hc_colorAxis
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp()
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp()
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+?reactive
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+?DT::dataTableOutput
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+?vegdist
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')
+runApp('~/Documents/ShinyApps/TempClus/App')

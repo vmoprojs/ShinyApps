@@ -44,7 +44,7 @@ function(input, output) {
     
     
     plot(anioA,val,t = "l",main ="",ylim = yrange,xlim = range(input$time),
-         xlab = "Años", ylab = input$indicator, col = "blue")
+         xlab = "Años", ylab = paste(input$indicator," (log)",sep = ""), col = "blue")
     lines(anioA,sup, col = "blue",lty = 2)
     lines(anioA,inft, col = "blue",lty = 2)
     

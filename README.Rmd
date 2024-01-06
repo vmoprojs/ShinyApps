@@ -27,6 +27,6 @@ Descriptions of every item are in the next table:
 
 | App     | Project                         | Collaborators                | Institution | Description|
 |---------|-------------------------------------------|----------------------------|--------------|--------------------------------------|
-| *NetCent* | *A sensitivity measurement of the international trade network in the period 1992-2015* | [Wilson Pérez-Oviedo](https://www.flacso.edu.ec/portal/docencia/perfil/wilson-perez.1289.1) and [John Cajas-Guijarro](https://uce-ec.academia.edu/JohnCajasGuijarro) | [FLACSO](https://www.flacso.edu.ec/)      |Time series (1992-2015) of estimated confidence intervals of centrality measures (Country-Country Elasticity and PageRank centrality) through bootstrap are shown. Pairwise Wilcoxon comparisons are also available.|
+| *NetCent*(https://vmoprojs.shinyapps.io/NetCent/) | *A sensitivity measurement of the international trade network in the period 1992-2015* | [Wilson Pérez-Oviedo](https://www.flacso.edu.ec/portal/docencia/perfil/wilson-perez.1289.1) and [John Cajas-Guijarro](https://uce-ec.academia.edu/JohnCajasGuijarro) | [FLACSO](https://www.flacso.edu.ec/)      |Time series (1992-2015) of estimated confidence intervals of centrality measures (Country-Country Elasticity and PageRank centrality) through bootstrap are shown. Pairwise Wilcoxon comparisons are also available.|
 
 
