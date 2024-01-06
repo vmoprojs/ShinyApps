@@ -22,10 +22,10 @@ Descriptions of every item are in the next table:
 <table>
 <colgroup>
 <col style="width: 6%" />
-<col style="width: 32%" />
-<col style="width: 21%" />
+<col style="width: 31%" />
+<col style="width: 20%" />
 <col style="width: 10%" />
-<col style="width: 28%" />
+<col style="width: 30%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -38,8 +38,7 @@ Descriptions of every item are in the next table:
 </thead>
 <tbody>
 <tr class="odd">
-<td><em>NetCent</em>(<a href="https://vmoprojs.shinyapps.io/NetCent/"
-class="uri">https://vmoprojs.shinyapps.io/NetCent/</a>)</td>
+<td><a href="https://vmoprojs.shinyapps.io/NetCent/">NetCent</a></td>
 <td><em>A sensitivity measurement of the international trade network in
 the period 1992-2015</em></td>
 <td><a
@@ -54,8 +53,7 @@ through bootstrap are shown. Pairwise Wilcoxon comparisons are also
 available.</td>
 </tr>
 <tr class="even">
-<td><em>ClusEvol</em>(<a href="https://vmoprojs.shinyapps.io/ClusEvol/"
-class="uri">https://vmoprojs.shinyapps.io/ClusEvol/</a>)</td>
+<td><a href="https://vmoprojs.shinyapps.io/ClusEvol/">ClusEvol</a></td>
 <td><em>Cluster Evolution Analytics: Country macroeconomic
 profiles</em></td>
 <td><a href="https://orcid.org/0000-0003-4980-8759">Bolívar
