@@ -115,8 +115,8 @@ function(input, output,session) {
         # cat("temp1:--- ",(temp1),"\n")
       }
       
-      
-
+      # normalize data:
+      kmodel <- pam(dist(scale(temp1)),ng)
       # normalize data:
       auxK = cbind(kmodel$clustering,yrs[j])
       Ksol = rbind(Ksol,auxK )
