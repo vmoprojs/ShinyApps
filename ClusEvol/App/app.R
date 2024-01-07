@@ -166,3 +166,12 @@ country2 = c(	"MA",	"AW",	"AO",	"AI",	"AL",	"AE",	"AR",	"AM",	"AG",	"AU",	"AT",	
 ctcode = dataset$countrycode
 
 yr = 1990:2019
+
+indIndiv <- c("rgdpe","rgdpo","pop","emp","avh","hc",
+                    "ccon","cda","cgdpe","cgdpo","cn","ck","ctfp","cwtfp",
+                    "rgdpna","rconna","rdana","rnna","rkna","rtfpna","rwtfpna","labsh","irr","delta",
+                    "xr","pl_con","pl_da","pl_gdpo",
+                    "i_cig","i_xm","i_xr","i_outlier","i_irr","cor_exp","statcap",
+                    "csh_c","csh_i","csh_g","csh_x","csh_m","csh_r",
+                    "pl_c","pl_i","pl_g","pl_x","pl_m","pl_n","pl_k")
+

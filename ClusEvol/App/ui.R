@@ -8,14 +8,31 @@ fluidPage(
   titlePanel(title=div(img(src="soliLogo.jpg",height=100, width=100),"Cluster Evolution Analytics")),
   titlePanel(title=div("Country macroeconomic profiles")),
   # Generate a row with a sidebar
-  sidebarPanel( width = 2,
+  sidebarPanel( width = 3,
                 
-    conditionalPanel(
-      
-      condition = "input.tabs=='Results'",
+    # condition = "input.tabs=='Results'",
       helpText("Chose the category of variables that you wish to analyse"),
       
-      selectInput("indicator", "Variables category:", choices=indicador,selected = "Real GDP, employment and population levels"),
+    selectInput("varType", "Select type of variable selection",
+                c(Group = "group", Individual = "individual"),selected = "individual"
+    ),
+      
+      
+      
+    
+    # Only show this panel if the plot type is a histogram
+    conditionalPanel(
+      condition = "input.varType == 'group'",
+      selectInput("indicator", "Variables category:", choices=indicador,selected = "Real GDP, employment and population levels",multiple=FALSE),
+    ),
+    
+    # Only show this panel if the plot type is a histogram
+    conditionalPanel(
+      condition = "input.varType == 'individual'",
+      selectInput("indicator1", "Variables:", choices=indIndiv,selected = "hc",multiple=TRUE),
+    ),
+    
+    
       selectInput("ctry", "Country to be analyzed:", choices=ctcode,selected = "ECU"),
       
       hr(),
@@ -33,9 +50,8 @@ fluidPage(
       selectInput("yrs", "Year to display", choices = yr,selected = yr[length(yr)]),
       
       checkboxInput("checkres1", "Hide base year", FALSE),
+    checkboxInput("logscale", "Log scale", FALSE)
       # checkboxInput("checkres", "Veamos", TRUE)
-      
-    )
     ),
     
     # Create a spot for the barplot
@@ -47,7 +63,9 @@ fluidPage(
                  highchartOutput("networkPlot", width = 1500, height = 700),
                  # tabPanel("Summary",  verbatimTextOutput("summary"))
                  h3("Table for base year:"),
-                 dataTableOutput('summary')
+                 dataTableOutput('summary'),
+                 h3("Summary statistics input data:"),
+                 verbatimTextOutput(outputId='sumdata')
                  
                  # plotOutput("indicatorPlotB"),
                  

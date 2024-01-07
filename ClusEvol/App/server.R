@@ -14,6 +14,7 @@ function(input, output,session) {
     datos <- rio::import("data/pwt1001.xlsx",which = "Data")
     
     
+    
     target.vars = c("rgdpe","rgdpo","pop","emp","avh","hc")
     
     if(input$indicator =="Real GDP, employment and population levels")
@@ -53,16 +54,33 @@ function(input, output,session) {
       target.vars <- c("pl_c","pl_i","pl_g","pl_x","pl_m","pl_n","pl_k")
     }
     
+    if(input$varType =="individual")
+    {
+      # Price levels, expenditure categories and capital
+      target.vars <- input$indicator1
+    }
+    
+    
+    
+    
     
     # mostrar <- input$yrs
     yrs.base <- input$yrs1
     pais <- input$ctry #Country to be analyzed
-    refdatos <- datos[datos$year==yrs.base,]
-
+    refdatos <- datos[datos$year==yrs.base,c("countrycode","year",target.vars)]
+    
+    if(input$logscale & length(target.vars)>1){
+      refdatos[,3:ncol(refdatos)] <- apply(refdatos[,3:ncol(refdatos)],2,log)
+    }
+    if(input$logscale & length(target.vars)==1){
+      refdatos[,3:ncol(refdatos)] <- log(refdatos[,3:ncol(refdatos)])
+    }
 
 
     ECbase <- refdatos[refdatos$countrycode==pais,c("countrycode","year",target.vars)]
 
+    
+    
     results <- list()
     ng <- input$obs#number of groups
     yrs <- unique(datos$year)
@@ -74,21 +92,35 @@ function(input, output,session) {
     for (j in  init:length(yrs))
     {
       refdatos <- datos[datos$year==yrs[j],c("countrycode","year",target.vars)]
+      
+      if(input$logscale & length(target.vars)>1){
+        refdatos[,3:ncol(refdatos)] <- apply(refdatos[,3:ncol(refdatos)],2,log)
+      }
+      if(input$logscale & length(target.vars)==1){
+        refdatos[,3:ncol(refdatos)] <- log(refdatos[,3:ncol(refdatos)])
+      }
+      
+      
       refdatos[refdatos$countrycode==pais,] <- ECbase #replace ECU values
       na.sol <- rbind(na.sol,c(sum(complete.cases(as.matrix(refdatos[,-(1:2)]))),nrow(as.matrix(refdatos[,-(1:2)]))))
-      temp1 <- impute.knn(as.matrix(refdatos[,-(1:2)]))$data
-      rownames(temp1) <- refdatos[,"countrycode"]
+      if(length(target.vars)>1)
+      {
+        temp1 <- impute.knn(as.matrix(refdatos[,-(1:2)]))$data
+        rownames(temp1) <- refdatos[,"countrycode"]
+      }else{
+        posauxNA <- which(!is.na(refdatos[,target.vars]))
+        refdatos <- refdatos[posauxNA,]
+        temp1 <- matrix(refdatos[,target.vars],ncol = 1)
+        rownames(temp1) <- refdatos[,"countrycode"]
+        # cat("temp1:--- ",(temp1),"\n")
+      }
+      
+      
 
       # normalize data:
-      # spe.norm <- decostand(temp1, "normalize")
-      # spe.ch <- vegdist(spe.norm, "euc")
-      # 
-      # kmodel <- pam(spe.ch,ng)
-      kmodel <- pam(dist(scale(temp1)),ng)
-      # auxK = cbind(kmodel$clustering,yrs[init:length(yrs)][j])
       auxK = cbind(kmodel$clustering,yrs[j])
       Ksol = rbind(Ksol,auxK )
-
+      
       # Find Ecuador's group and data
 
       gbase <- list()
@@ -97,24 +129,46 @@ function(input, output,session) {
         # i = 1
         gbase[[i]] <- as.vector(refdatos[,1][kmodel$cluster==i])
       }
-
+      
       nbelong <- grep(pais,gbase)# number of group which "ECU" belongs to
-
+      
       Cnamesbase <- datos$country[match(gbase[[nbelong]],datos$countrycode)]#Country names in EC group
       Cdatabase <- refdatos[match(gbase[[nbelong]],refdatos$countrycode),-(1:2)]# Data in EC group
       temp1.aux <- temp1[match(gbase[[nbelong]],rownames(temp1)),]# Data in EC group
-
-      solbase <- data.frame(countrycode = rownames(temp1.aux),country = Cnamesbase,Cdatabase)
-
+ 
+      if(length(target.vars)>1)
+      {
+        
+        solbase <- data.frame(countrycode = rownames(temp1.aux),country = Cnamesbase,Cdatabase)
+      }else{
+        # temp1.aux <- temp1[match(gbase[[nbelong]],names(temp1)),]# Data in EC group
+        solbase <- data.frame(countrycode = names(temp1.aux),country = Cnamesbase,Cdatabase)
+        
+      }
+      # cat("Control 140\n")
       # ST: cleaning outliers inside group
       spe.norm.aux <- decostand(temp1.aux, "normalize")
-      centers <- spe.norm.aux[which(kmodel$medoids[nbelong]==rownames(spe.norm.aux)) ,]
-      distances <- sqrt(rowSums((spe.norm.aux - (centers))^2))
-      outliers <- order(distances, decreasing=T)[1:round(.2*nrow(solbase))]
-      nnn <- rownames(spe.norm.aux[-outliers,]) #names of members of ecuador group
-      if(!pais%in%nnn) {nnn =  c(pais,nnn)}
-      # outliers
-      g.fin <- solbase[solbase$countrycode%in%nnn,]
+      
+      # cat("Control 141\n")
+      if(length(target.vars)>1){
+        centers <- spe.norm.aux[which(kmodel$medoids[nbelong]==rownames(spe.norm.aux)) ,]
+        # cat("Control 141",str(spe.norm.aux),"\n")
+        distances <- sqrt(rowSums((spe.norm.aux - (centers))^2))
+        outliers <- order(distances, decreasing=T)[1:round(.2*nrow(solbase))]
+        nnn <- rownames(spe.norm.aux[-outliers,]) #names of members of ecuador group
+        if(!pais%in%nnn) {nnn =  c(pais,nnn)}
+        # outliers
+        g.fin <- solbase[solbase$countrycode%in%nnn,]
+      }else{
+        # outliers TO_DO: clear outliers with one variable
+        nnn <- rownames(spe.norm.aux) #names of members of ecuador group
+        g.fin <- solbase[solbase$countrycode%in%nnn,]
+        names(g.fin)[3] <- target.vars# para cambiar el nombre de los valors al de la variable input
+      }
+      
+      
+      
+      
       # END: cleaning outliers inside group
       # g.fin = solbase # delete when outlieres are taken into account
       g.fin$anio = yrs[j]
@@ -123,14 +177,19 @@ function(input, output,session) {
       results[[contador]] <- g.fin
       contador <- contador+1
     }
-
+    
     Ksol = data.frame(  countrycode = rownames(Ksol), Cat = Ksol[,1],year =  Ksol[,2])
+    # cat("\n results:--- ",str(results),"\n")
+    # cat("Ksol:--- ",str(Ksol),"\n")
     names(results) <- yrs[init:length(yrs)]
     mapdata <- get_data_from_map(download_map_data1("custom/world-palestine-highres"))
     # load("data/mapdata.RData")
     # mapdata <- get_data_from_map(mapdata)
+    
+    # cat("results:---",(results),"\n")
+    sumdat <- summary(datos[,target.vars])
     return(list(datos = datos,target.vars=target.vars,
-                results = results,mapdata = mapdata,ECk = nbelong, Clus = Ksol))
+                results = results,mapdata = mapdata,ECk = nbelong, Clus = Ksol,sumdat=sumdat))
     
   })
   
@@ -139,13 +198,23 @@ function(input, output,session) {
     if(!input$checkres1)
     {
     J = (df_shiny()$results[input$yrs][[1]])
-      
+    
+      # cat("----",str(J),"\n")
       datatable(J,rownames = F,class = 'cell-border stripe',filter = "top",
                 options = list(columnDefs = list(list(className = 'dt-center', targets = 2:ncol(J)-1))))%>%
         formatRound(df_shiny()$target.vars,2)
       
       }
       
+  })
+  
+  
+  output$sumdata <- renderPrint({
+    if(!input$checkres1)
+    {
+     df_shiny()$sumdat
+    }
+    
   })
   
   output$tabAll <- renderDataTable({
